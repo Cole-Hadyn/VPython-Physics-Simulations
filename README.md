@@ -2,7 +2,7 @@
 
 A collection of interactive 3D computational physics engines written in Python utilizing the VPython framework.
 
-## Included Simulations:
+## Some Included Simulations:
 
 ### 1. Biot-Savart Point Charge Field (`mag_field_of_moving_charge.py`)
 Visualizes the magnetic field vector $\vec{B}$ at six symmetric observation points in real time as a subatomic charged particle flies past at $2 \times 10^3 \text{ m/s}$.
