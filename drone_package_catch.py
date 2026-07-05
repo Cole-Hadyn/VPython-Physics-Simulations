@@ -6,9 +6,9 @@ from vpython import *
 
 scene.center = vec(75,50,0)  # move camera to center the scene
 
-grass = box(pos = vec(75,-10,0), size = vec(600,3,70), color=color.green)
-pack = sphere(pos=vec(30,200,0), radius=3, color=color.red, make_trail = True)
-drone = sphere(pos=vec(-20,0,0), radius=5, color = color.cyan, make_trail = True)
+grass = box(pos = vec(75,-10,0), size = vec(600, 3, 70), color = color.green)
+pack = sphere(pos = vec(30,200,0), radius = 3, color = color.red, make_trail = True)
+drone = sphere(pos = vec(-20,0,0), radius = 5, color = color.cyan, make_trail = True)
 
 pack.v = vec(20, -1, 0)          # Package starting velocity
 pack.m = 1.0
@@ -16,7 +16,7 @@ pack.p = pack.m * pack.v
 
 drone.m = 2.0                   # drone mass
 drone.p = vec(0, 0, 0)          # Starting Momentum
-drone.pos = vec(0, 0, 0)        # Starting position
+drone.pos = vec(-20, 0, 0)        # Starting position
 
 t = 0
 deltat = 0.05
@@ -57,11 +57,11 @@ while pack.pos.y > grass.pos.y:
   Fnet_pack = Fg_pack
   Fnet_drone = F_thrust + Fg_drone + F_drag # Steering thrust AND gravity pulling it down
   
-# 4. MOMENTUM UPDATES
+#  MOMENTUM UPDATES
   pack.p = pack.p + (Fnet_pack * deltat)
   drone.p = drone.p + (Fnet_drone * deltat)
 
-# 5. POSITION UPDATES
+#  POSITION UPDATES
   pack.pos = pack.pos + (pack.p / pack.m) * deltat
   drone.pos = drone.pos + (drone.p / drone.m) * deltat
 
