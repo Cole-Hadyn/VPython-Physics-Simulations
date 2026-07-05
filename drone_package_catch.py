@@ -7,11 +7,11 @@ from vpython import *
 scene.center = vec(75,50,0)  # move camera to center the scene
 
 grass = box(pos = vec(75,-10,0), size = vec(600, 3, 70), color = color.green)
-pack = sphere(pos = vec(30,200,0), radius = 3, color = color.red, make_trail = True)
+pack = sphere(pos = vec(-120,300,0), radius = 3, color = color.red, make_trail = True)
 drone = sphere(pos = vec(-20,0,0), radius = 5, color = color.cyan, make_trail = True)
 
-pack.v = vec(20, -1, 0)          # Package starting velocity
-pack.m = 1.0
+pack.v = vec(30, -1, 0)          # Package starting velocity
+pack.m = 0.5
 pack.p = pack.m * pack.v
 
 drone.m = 2.0                   # drone mass
@@ -44,10 +44,10 @@ while pack.pos.y > grass.pos.y:
 
 # Regulates the drone speed as it approaches the package
   if magr > 10:
-      magF_thrust = 60
+      magF_thrust = 80
 
   else:
-      magF_thrust = 60 * (magr / 10)  # Force approaches 0 as magnitude of 'r' approaches 0
+      magF_thrust = 80 * (magr / 10)  # Force approaches 0 as magnitude of 'r' approaches 0
 
   F_thrust = magF_thrust * rhat
 
