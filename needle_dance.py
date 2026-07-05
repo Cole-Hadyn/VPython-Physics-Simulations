@@ -20,10 +20,11 @@ seg = L/N                      #Size of Rod Segments
 spherePoint = (-L/2) + seg/2   #Location where each sphere should go
 dQ = Q/N                       #Charge of each segment
 
+
 while spherePoint < .95 * (L/2):
   sphere(pos=vec(spherePoint,0,0), radius=0.0025, color=color.red)
   spherePoint = spherePoint + seg
-  obs = sphere(pos=vec(0.1, 0.015, 0), radius=0.003, color=color.orange, visible=True, vel=vec(0, 0,0.088))
+  obs = sphere(pos=vec(0.1, 0.015, 0), radius=0.003, color=color.blue, visible=True, vel=vec(0, 0,0.088))
   dx = L/N        #Change in X
   x = -L/2 + (dx/2)
   dt = 0.01
@@ -38,9 +39,9 @@ while t < 100:
       fieldNewE = 9e9 * (dQ / mag(r)**2) * hat(r)
       fieldE = fieldE + fieldNewE
       x = x + dx
-      force = fieldE * sphereQ
-      acceleration = force / 0.0001
-      obs.vel = obs.vel + (acceleration * dt)
-      obs.pos = obs.pos + (obs.vel *dt)
-      t = t + dt
+    force = fieldE * sphereQ
+    acceleration = force / 0.0001
+    obs.vel = obs.vel + (acceleration * dt)
+    obs.pos = obs.pos + (obs.vel *dt)
+    t = t + dt
 
