@@ -6,11 +6,11 @@ from vpython import *
 
 scene.center = vec(75,50,0)  # move camera to center the scene
 
-grass = box(pos = vec(75,-10,0), size = vec(400,3,70), color=color.green)
-pack = sphere(pos=vec(50,100,0), radius=3, color=color.red, make_trail = True)
-drone = sphere(pos=vec(0,0,0), radius=5, color = color.cyan, make_trail = True)
+grass = box(pos = vec(75,-10,0), size = vec(600,3,70), color=color.green)
+pack = sphere(pos=vec(30,200,0), radius=3, color=color.red, make_trail = True)
+drone = sphere(pos=vec(-20,0,0), radius=5, color = color.cyan, make_trail = True)
 
-pack.v = vec(2, -1, 0)          # Package starting velocity
+pack.v = vec(20, -1, 0)          # Package starting velocity
 pack.m = 1.0
 pack.p = pack.m * pack.v
 
@@ -27,12 +27,15 @@ scene.pause()                   # Pauses the simulation so that user can start w
 graph=gcurve(color=color.purple)
 
 g = vec(0, -9.8, 0)
+b = 1.5
 
 while pack.pos.y > grass.pos.y:
   rate(300)
+
   t = t + deltat
 
   Fg_drone = drone.m * g
+  Fg_pack = pack.m *g
 
 # Finding the vector 'r' that points from the drone to the package
   r = (pack.pos - drone.pos)      # Updates 'r' each run through loop
@@ -41,16 +44,18 @@ while pack.pos.y > grass.pos.y:
 
 # Regulates the drone speed as it approaches the package
   if magr > 10:
-      magF_thrust = 40
+      magF_thrust = 60
 
   else:
-      magF_thrust = 40 * (magr / 10)  # Force approaches 0 as magnitude of 'r' approaches 0
+      magF_thrust = 60 * (magr / 10)  # Force approaches 0 as magnitude of 'r' approaches 0
 
   F_thrust = magF_thrust * rhat
 
-  Fnet_pack = vec(0, 0, 0)
+  drone_v = drone.p / drone.m
+  F_drag = -b * drone_v
 
-  Fnet_drone = F_thrust + Fg_drone # Steering thrust AND gravity pulling it down
+  Fnet_pack = Fg_pack
+  Fnet_drone = F_thrust + Fg_drone + F_drag # Steering thrust AND gravity pulling it down
   
 # 4. MOMENTUM UPDATES
   pack.p = pack.p + (Fnet_pack * deltat)
