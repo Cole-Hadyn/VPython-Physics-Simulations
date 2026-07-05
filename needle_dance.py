@@ -1,5 +1,7 @@
+import os
+os.environ['VPYTHON_LAUNCH_BROWSER'] = 'False'
 
-
+from vpython import *
 
 scene.background = color.white 
 
