@@ -1,3 +1,4 @@
+Disclaimer: File made with AI assistance.
 # VPython 3D Physics Simulations
 
 A collection of interactive 3D computational physics engines written in Python utilizing the VPython framework.
@@ -25,4 +26,3 @@ pip install vpython "setuptools<70.0.0"
 
 # Run any simulation
 python circus_charge.py
-
