@@ -11,11 +11,13 @@ This Python script utilizes VPython to simulate a real-time physics environment 
 ### 2. Charged Particle Attached to oppositely charged rod (`needle_dance.py`)
 Displays the physics of electrical attrachtion between opposite charges. Simulating a water droplet orbiting the tip of a very fine needle. The script utilizes Coulomb's Law to accurately depict the force from the charged needle acting on the the particle representing the water droplet.
 
+### 3. Electrical Force on a point charge (`e_field_of_a_dipole.py`)
+Using a point charge to navigate the electrical field producted by dipole composed of two particles with opposite charges.
 
-### 3. Biot-Savart Point Charge Field (`mag_field_of_moving_charge.py`)
+### 4. Biot-Savart Point Charge Field (`mag_field_of_moving_charge.py`)
 Visualizes the magnetic field vector $\vec{B}$ at six symmetric observation points in real time as a subatomic charged particle flies past at $2 \times 10^3 \text{ m/s}$.
 
-### 4. Lorentz Force Drone Trajectory (`circus_charge.py`)
+### 5. Lorentz Force Drone Trajectory (`circus_charge.py`)
 Models a particle tracking system subject to uniform orthogonal electric ($\vec{E}$) and magnetic ($\vec{B}$) fields, plotting momentum variations on a dynamic graph canvas.
 
 ## HOW TO--Installation & Local Execution
