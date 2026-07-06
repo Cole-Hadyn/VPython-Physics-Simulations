@@ -63,7 +63,7 @@ t = 0
 dt = .1
 
 # Navigating the charge around the E-field
-while t < 100:
+while t < 300:
   rate(100)
   r3 = test_charge.pos - charge_1.pos
   r4 = test_charge.pos - charge_2.pos
