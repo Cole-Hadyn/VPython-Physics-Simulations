@@ -29,6 +29,19 @@ graph=gcurve(color=color.purple)
 g = vec(0, -9.8, 0)
 b = 1.5
 
+# Function that resets the test charge back to its starting state
+def reset_simulation():
+    global t, k
+    t = 0
+    k = vec(0, 0, 0)
+    test_charge.pos = vec(0, R, 0)
+    test_charge.clear_trail()  # Clears the old line from the screen
+    print("Simulation reset!")
+
+# Create the clickable button in the browser canvas
+button(text = "Repeat Simulation", bind = reset_simulation)
+scene.append_to_caption("\n\n") # Adds vertical spacing below the button
+
 while pack.pos.y > grass.pos.y:
   rate(300)
 
