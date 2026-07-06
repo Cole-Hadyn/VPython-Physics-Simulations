@@ -38,20 +38,7 @@ while t < 100:
   fieldE_2 = vec(0,0,0)
 
   x = -L/2 + (dx/2)
-
-# Function that resets the test charge back to its starting state
-def reset_simulation():
-    global t, k
-    t = 0
-    k = vec(0, 0, 0)
-    test_charge.pos = vec(0, R, 0)
-    test_charge.clear_trail()  # Clears the old line from the screen
-    print("Simulation reset!")
-
-# Create the clickable button in the browser canvas
-button(text = "Repeat Simulation", bind = reset_simulation)
-scene.append_to_caption("\n\n") # Adds vertical spacing below the button
-  
+ 
   while x < L/2:
     segmentpos = vec(x,0,0)     ## don't make a sphere, just use the position
     r_1 = obs_1.pos - segmentpos
