@@ -8,10 +8,10 @@ A collection of interactive 3D computational physics engines written in Python u
 ### 1. Dynamic Package Collection Simulation (`drone_package_catch.py`) 
 This Python script utilizes VPython to simulate a real-time physics environment where an autonomous drone dynamically tracks and intercepts a falling package. Incorporating the Momentum Principle, the simulation models complex behaviors including gravitational pull on both objects, steering force scaling, and aerodynamic drag to ensure a smooth, physically accurate interception before the package impacts the ground.
 
-### 2. Charged Particle Attached to oppositely charged rod (`needle_dance.py`)
+### 2. Charged Particle Attached to Oppositely Charged Rod (`needle_dance.py`)
 Displays the physics of electrical attrachtion between opposite charges. Simulating a water droplet orbiting the tip of a very fine needle. The script utilizes Coulomb's Law to accurately depict the force from the charged needle acting on the the particle representing the water droplet.
 
-### 3. Electrical Force on a point charge (`e_field_of_a_dipole.py`)
+### 3. Electrical Force on a Point Charge (`e_field_of_a_dipole.py`)
 Using a point charge to navigate the electrical field producted by dipole composed of two particles with opposite charges.
 
 ### 4. Biot-Savart Point Charge Field (`mag_field_of_moving_charge.py`)
