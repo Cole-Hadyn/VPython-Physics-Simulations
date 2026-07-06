@@ -7,19 +7,19 @@ from vpython import *
 scene.center = vec(75,50,0)  # move camera to center the scene
 
 grass = box(pos = vec(75,-10,0), size = vec(600, 3, 70), color = color.green)
-pack = sphere(pos = vec(-120,300,0), radius = 3, color = color.red, make_trail = True)
-drone = sphere(pos = vec(-20,0,0), radius = 5, color = color.cyan, make_trail = True)
+pack = sphere(pos = vec(30,200,0), radius = 3, color = color.red, make_trail = True)
+drone = sphere(pos = vec(-30,0,0), radius = 5, color = color.cyan, make_trail = True)
 
 pack.v = vec(30, -1, 0)          # Package starting velocity
-pack.m = 0.5
+pack.m = 1.0
 pack.p = pack.m * pack.v
 
 drone.m = 2.0                   # drone mass
 drone.p = vec(0, 0, 0)          # Starting Momentum
-drone.pos = vec(-20, 0, 0)        # Starting position
+drone.pos = vec(-30, 0, 0)        # Starting position
 
 t = 0
-deltat = 0.05
+deltat = 0.02
 
 scene.pause()                   # Pauses the simulation so that user can start when ready
 
@@ -43,11 +43,11 @@ while pack.pos.y > grass.pos.y:
   magr = mag(r)
 
 # Regulates the drone speed as it approaches the package
-  if magr > 10:
-      magF_thrust = 80
+  if magr > 20:
+      magF_thrust = 250
 
   else:
-      magF_thrust = 80 * (magr / 10)  # Force approaches 0 as magnitude of 'r' approaches 0
+      magF_thrust = 250 * (magr / 20)  # Force approaches 0 as magnitude of 'r' approaches 0
 
   F_thrust = magF_thrust * rhat
 
@@ -57,18 +57,19 @@ while pack.pos.y > grass.pos.y:
   Fnet_pack = Fg_pack
   Fnet_drone = F_thrust + Fg_drone + F_drag # Steering thrust AND gravity pulling it down
   
-#  MOMENTUM UPDATES
+#  MOMENTUM & POSITION UPDATES
   pack.p = pack.p + (Fnet_pack * deltat)
-  drone.p = drone.p + (Fnet_drone * deltat)
-
-#  POSITION UPDATES
   pack.pos = pack.pos + (pack.p / pack.m) * deltat
+
+  drone.p = drone.p + (Fnet_drone * deltat)
   drone.pos = drone.pos + (drone.p / drone.m) * deltat
+
+
 
   graph.plot(t, magr)   # Graph plots how far drone is from package 'r' over time 't'
 
 # Stop and exit from loop if drone goes too fast
-  if mag(pack.pos - drone.pos) < 3:
+  if mag(pack.pos - drone.pos) < 4:
     print(f"The drone caught the package in {t - deltat: .2f} seconds.")
     break
 

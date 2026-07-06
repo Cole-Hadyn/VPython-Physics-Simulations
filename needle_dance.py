@@ -24,41 +24,42 @@ dQ = Q/N                       #Charge of each segment
 while spherePoint < .95 * (L/2):
   sphere(pos=vec(spherePoint,0,0), radius=0.0025, color=color.red)
   spherePoint = spherePoint + seg
-  obs_1 = sphere(pos=vec(0.1, 0.015, 0), radius=0.003, color=color.blue, visible=True, vel=vec(0, 0,0.088))
-  obs_2 = sphere(pos=vec(-0.1, -0.015, 0), radius=0.003, color=color.blue, visible=True, vel=vec(0, 0,-0.088))
-  dx = L/N    		         #Change in X
-  x = -L/2 + (dx/2)
-  dt = 0.01
-  
+
+dx = L/N    		         #Change in X
+x = -L/2 + (dx/2)
+dt = 0.01
+
+obs_1 = sphere(pos=vec(0.1, 0.015, 0), radius=0.003, color=color.blue, visible=True, vel=vec(0, 0,0.088))
+obs_2 = sphere(pos=vec(-0.1, -0.015, 0), radius=0.003, color=color.blue, visible=True, vel=vec(0, 0,-0.088))
+
 while t < 100:
-    rate(50)
-    fieldE_1 = vec(0,0,0)
-    fieldE_2 = vec(0,0,0)
+  rate(60)
+  fieldE_1 = vec(0,0,0)
+  fieldE_2 = vec(0,0,0)
 
-    x = -L/2 + (dx/2)
+  x = -L/2 + (dx/2)
 
-    while x < L/2:
-      segmentpos = vec(x,0,0)     ## don't make a sphere, just use the position
-      r_1 = obs_1.pos - segmentpos
-      r_2 = obs_2.pos - segmentpos
-      fieldNewE_1 = 9e9 * (dQ / mag(r_1)**2) * hat(r_1)
-      fieldE_1 = fieldE_1 + fieldNewE_1
+  while x < L/2:
+    segmentpos = vec(x,0,0)     ## don't make a sphere, just use the position
+    r_1 = obs_1.pos - segmentpos
+    r_2 = obs_2.pos - segmentpos
+    fieldNewE_1 = 9e9 * (dQ / mag(r_1)**2) * hat(r_1)
+    fieldE_1 = fieldE_1 + fieldNewE_1
 
-      fieldNewE_2 = 9e9 * (dQ / mag(r_2)**2) * hat(r_2)
-      fieldE_2= fieldE_2 + fieldNewE_2
+    fieldNewE_2 = 9e9 * (dQ / mag(r_2)**2) * hat(r_2)
+    fieldE_2= fieldE_2 + fieldNewE_2
 
-      
-      x = x + dx
+    x = x + dx
 
-    force_1 = fieldE_1 * sphereQ
-    acceleration_1 = force_1 / 0.0001
-    obs_1.vel = obs_1.vel + (acceleration_1 * dt)
-    obs_1.pos = obs_1.pos + (obs_1.vel *dt)
+  force_1 = fieldE_1 * sphereQ
+  acceleration_1 = force_1 / 0.0001
+  obs_1.vel = obs_1.vel + (acceleration_1 * dt)
+  obs_1.pos = obs_1.pos + (obs_1.vel *dt)
 
-    force_2 = fieldE_2 * sphereQ
-    acceleration_2 = force_2 / 0.0001
-    obs_2.vel = obs_2.vel + (acceleration_2 * dt)
-    obs_2.pos = obs_2.pos + (obs_2.vel *dt)
+  force_2 = fieldE_2 * sphereQ
+  acceleration_2 = force_2 / 0.0001
+  obs_2.vel = obs_2.vel + (acceleration_2 * dt)
+  obs_2.pos = obs_2.pos + (obs_2.vel *dt)
 
-    t = t + dt
+  t = t + dt
 
