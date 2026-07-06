@@ -34,7 +34,6 @@ print("Enet1 = ", Enet1)
 ob1.E = Enet1
 attach_arrow(ob1, "E", scale = sf)   # Displaying E-field applied to observation point
 
-
 # Loop to display E-field around the dipole with arrows
 R = 0.1
 theta = 0
@@ -61,6 +60,20 @@ test_charge.p = vec(0, 0, 0)
 
 t = 0
 dt = .1
+k = vec(0, 0, 0)
+
+# Function that resets the test charge back to its starting state
+def reset_simulation():
+    global t, k
+    t = 0
+    k = vec(0, 0, 0)
+    test_charge.pos = vec(0, R, 0)
+    test_charge.clear_trail()  # Clears the old line from the screen
+    print("Simulation reset!")
+
+# Create the clickable button in the browser canvas
+button(text = "Repeat Simulation", bind = reset_simulation)
+scene.append_to_caption("\n\n") # Adds vertical spacing below the button
 
 # Navigating the charge around the E-field
 while t < 300:
