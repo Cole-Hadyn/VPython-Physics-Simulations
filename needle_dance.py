@@ -32,6 +32,24 @@ dt = 0.01
 obs_1 = sphere(pos=vec(0.1, 0.015, 0), radius=0.003, color=color.blue, visible=True, vel=vec(0, 0,0.088))
 obs_2 = sphere(pos=vec(-0.1, -0.015, 0), radius=0.003, color=color.blue, visible=True, vel=vec(0, 0,-0.088))
 
+# Function that resets the test charge back to its starting state
+def reset_simulation():
+    global t
+    t = 0
+    obs_1.pos = vec(0.1, 0.015, 0)
+    obs_1.vel = vec(0, 0, 0.088)
+    obs_1.clear_trail()  # Clears the old line from the screen
+
+    obs_2.pos = vec(0.1, -0.015, 0)
+    obs_2.vel = vec(0, 0, -0.088)
+    obs_2.clear_trail()  
+  
+    print("Simulation reset!")
+
+# Create the clickable button in the browser canvas
+button(text = "Repeat Simulation", bind = reset_simulation)
+scene.append_to_caption("\n\n") # Adds vertical spacing below the button
+
 while t < 100:
   rate(60)
   fieldE_1 = vec(0,0,0)
