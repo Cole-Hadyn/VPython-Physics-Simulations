@@ -35,7 +35,6 @@ def setup():		# '()' Implies this function only runs once
         [ vector( 0.340456, 0.524616, 1.9741e-3 ) , vector( -3.715e-3, 0.203231, 0.979124 ) ],
         [ vector( -0.30355, 0.755437, -1.47164e-3 ),  vector( 4.41851e-3, 0.241271, -0.970448 )]
         ]
-        
     for info in rpa:
         ring( pos=info[0], axis=info[1], color=color.magenta, radius = 0.05, thickness = 0.01 )
 
@@ -69,9 +68,12 @@ k = vec(0, 0, 0)
 def reset_simulation():
     global t
     t = 0
+
+    particle.clear_trail()  # Clears the old line from the screen
     particle.pos = vec(-0.3, 0, 0)
     particle.Ftot = vec(0,0,0)
-    particle.clear_trail()  # Clears the old line from the screen
+    particle.v = vector(0,0,-1.5e7)
+    particle.p = particle.mass * particle.v 
     print("Simulation reset!")
 
 # Create the clickable button in the browser canvas
