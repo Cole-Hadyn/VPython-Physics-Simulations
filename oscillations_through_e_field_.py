@@ -1,3 +1,4 @@
+
 import os
 os.environ['VPYTHON_LAUNCH_BROWSER'] = 'False'
 
@@ -73,28 +74,30 @@ for i in range(6):
 # Creating a pt. charge to travel around the electric field of the stationary charges
 
 # Creating a charged particle that will navigate the E-field of the dipole
-test_charge = sphere(pos = vec(-1, 0, 0), radius = my_charge.radius, color = color.blue, q = -1.0e-6, make_trail = True)
+test_charge = sphere(pos = vec(0, 6, 0), radius = my_charge.radius, color = color.blue, q = -0.5e-6, make_trail = True)
 test_charge.m = 1e-5
+initial_v = vec(0 ,-3.2, 0)
 test_charge.p = vec(0, 0, 0)
 
 
 
 # Navigating the charge around the E-field
-while t < 300:
-  rate(100)
+t = 0
+dt =0.002
+oofpez = 9e9  # one over four pi epsilon zero
+
+
+while t < 30:
+  rate(200)
   r3 = test_charge.pos - my_charge.pos		# Distance of (+) charge from test charge
   r4 = test_charge.pos - my_charge2.pos		# Distance of (-) charge from test charge
-  test_charge.E1 = (oofpez * my_charge.q / mag(r3)**2) * hat(r3)	 # Calculating external E-field from each pt. in dipole
-  test_charge.E2 = (oofpez * my_charge2.q / mag(r4)**2) * hat(r4)
+  test_charge.E1 = (oofpez * q1 / mag(r3)**2) * hat(r3)	 # Calculating external E-field from each pt. in dipole
+  test_charge.E2 = (oofpez * q2 / mag(r4)**2) * hat(r4)
   Enet2 = (test_charge.E1 + test_charge.E2)
   F = test_charge.q * (Enet2)		# Force applied to a point charge from an external E-field
-  p = test_charge.p + (F * dt)		# Momentum update eqn.
-  test_charge.pos = test_charge.pos + ((p/test_charge.m)*dt)	# Position update eqn.
+  test_charge.p = test_charge.p + (F * dt)		# Momentum update eqn.
+  test_charge.pos = test_charge.pos + ((test_charge.p/test_charge.m)*dt)	# Position update eqn.
   t = t + dt
-
-
-
-
 
 
 
