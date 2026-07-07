@@ -53,7 +53,7 @@ attach_arrow(particle, "v", scale=1e-8, color=color.green)
 
 v_label = label(text='Velocity', color=color.red, height=12, box=False, line=False)
 
-particle.Ftot = vec(0,0,0)					 # initial force on particle is 0
+particle.Ftot = vec(0, 0, 0)					 # initial force on particle is 0
 attach_arrow(particle, "Ftot", scale=1e11, color=color.black)
 
 f_label = label(text='Force', color=color.black, height=12, box=False, line=False)
@@ -70,6 +70,7 @@ def reset_simulation():
     global t
     t = 0
     particle.pos = vec(-0.3, 0, 0)
+    particle.Ftot = vec(0,0,0)
     particle.clear_trail()  # Clears the old line from the screen
     print("Simulation reset!")
 
