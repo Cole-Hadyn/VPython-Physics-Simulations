@@ -7,7 +7,7 @@ from vpython import *
 mnofp= 1e-7  # mu_0 / 4pi
 
 # Particle parameters
-particle = sphere(pos=vec(-10e-7, 0, 0), radius=2e-8, color=color.red)
+particle = sphere(pos=vec(-20e-7, 0, 0), radius=2e-8, color=color.red)
 q = 1.602e-19
 particle.v = vector(2e3, 0, 0)
 
@@ -84,18 +84,17 @@ def reset_simulation():
     t = 0
     step_count = 0
     data_set = 0
-    particle.pos = vec(-10e-7, 0, 0)
+    particle.pos = vec(-20e-7, 0, 0)
     
     running = True   # Restart tracking
 
-# Generate UI Button
 button(text="Repeat Simulation", bind=reset_simulation)
 scene.append_to_caption("\n\n")
 
 print("Starting observations")
 
 while True:
-  rate(100)
+  rate(150)
   if running and t < 1.5e-9:
 
     particle.pos = particle.pos + particle.v * dt
@@ -134,6 +133,8 @@ while True:
       print("obs5 B=", obs5.B)
       print("obs6 B=", obs6.B)
       data_set = data_set + 1
+      print("Collected dataset:", data_set)
+
 # Had to change the variables used for r value, and cross products to update the mag field
 # Obs on x-axis had a mag field of 0; This is becuase the cross product of two vectors in the same direction is 0.
 # Largest mag field is when the particle is closest to a obs location
