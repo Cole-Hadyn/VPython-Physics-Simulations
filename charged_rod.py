@@ -30,36 +30,30 @@ sf = 1.2e-4  # Scale factor for the arrows so they fit nicely on screen
 
 
 # Loop to display E-field around the ROD with arrows
-# =======================================================================
-# UNIFIED LOOP: Displays both the X-Y and Y-Z E-field rings around the rod
-# =======================================================================
+
 R = 0.25         # Radius of both observation rings
 x_center = 0.0   # Center position of the Y-Z ring along the rod
 theta = 0
-dtheta = pi/6    # 12 symmetric steps around a circle
+dtheta = pi/8    # 16 symmetric steps around a circle
 
 print("Generating combined vector rings...")
 
 while theta < 2 * pi:
-    # ----------------===================================================
+
     # RING 1: X-Y Plane Ring (Flat circle extending out from the sides)
-    # ----------------===================================================
     obs_pos1 = vec(R * cos(theta), R * sin(theta), 0)
     Enet1 = vec(0,0,0)
 
-    # ----------------===================================================
     # RING 2: Y-Z Plane Ring (Vertical collar wrapping around the cylinder)
-    # ----------------===================================================
     obs_pos2 = vec(x_center, R * cos(theta), R * sin(theta))
     Enet2 = vec(0,0,0)
 
-    # ----------------===================================================
-    # INTEGRATION: Calculate segment contributions for BOTH rings at once
-    # ----------------===================================================
+# INTEGRATION: Calculate segment contributions for BOTH rings at once
+
     x_seg = -L/2 + (dx/2)
     while x_seg < L/2:
         segmentpos = vec(x_seg, 0, 0)
-        
+
         # Math for Ring 1
         r_vector1 = obs_pos1 - segmentpos
         deltaE1 = oofpez * (dq / mag(r_vector1)**2) * hat(r_vector1)
@@ -72,15 +66,13 @@ while theta < 2 * pi:
 
         x_seg = x_seg + dx
 
-    # ----------------===================================================
-    # RENDER: Draw the distinct field arrows for both geometries
-    # ----------------===================================================
-    # Draw Ring 1 arrow (Cyan so you can tell them apart visually!)
+# Drawing the distinct field arrows for both geometries
+    # Draw Ring 1 arrow (Cyan)
     arrow(pos=obs_pos1, axis=Enet1 * sf, color=color.cyan, shaftwidth=0.012)
-    
+
     # Draw Ring 2 arrow (Orange)
     arrow(pos=obs_pos2, axis=Enet2 * sf, color=color.orange, shaftwidth=0.012)
-    
+
     # Console tracking output
     print(f"Angle {degrees(theta):.0f}° | Ring 1 Enet={Enet1} | Ring 2 Enet={Enet2}")
 
@@ -88,21 +80,21 @@ while theta < 2 * pi:
 
 print("Unified vector mapping complete.")
 
-attach_arrow(obs,"E", scale=1e-3)
+#attach_arrow(obs,"E", scale=1e-3)
 
 
-x = -L/2 + (dx/2)
-while x < L/2:
-   segmentpos = vec(x,0,0)     ## don't make a sphere, just use the position
-   r = (obs.pos - segmentpos)    ## add code to calculate r for this segment ##  (note that segmentpos is a vector, not an object)
+#x = -L/2 + (dx/2)
+#while x < L/2:
+#   segmentpos = vec(x,0,0)     ## don't make a sphere, just use the position
+#   r = (obs.pos - segmentpos)    ## add code to calculate r for this segment ##  (note that segmentpos is a vector, not an object)
 
 
-   deltaE = oofpez*(dq/mag(r)**2)*hat(r)   ## add code to calculate dE, the electric field due to this segment
+#   deltaE = oofpez*(dq/mag(r)**2)*hat(r)   ## add code to calculate dE, the electric field due to this segment
           ## update the total
-   obs.E= obs.E + deltaE       ## add code to update obs.E
+#   obs.E= obs.E + deltaE       ## add code to update obs.E
 
-   x = x + dx
-print("E =" , obs.E)
+#   x = x + dx
+#print("E =" , obs.E)
 
 
 # If N = 5 , E = (-210.238, 3127.96, 0)
