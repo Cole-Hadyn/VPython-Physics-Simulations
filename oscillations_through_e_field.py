@@ -1,3 +1,4 @@
+
 import os
 os.environ['VPYTHON_LAUNCH_BROWSER'] = 'False'
 
@@ -97,10 +98,6 @@ while t < 30:
   test_charge.p = test_charge.p + (F * dt)		# Momentum update eqn.
   test_charge.pos = test_charge.pos + ((test_charge.p/test_charge.m)*dt)	# Position update eqn.
   t = t + dt
-
-
-
-
 
 
 
