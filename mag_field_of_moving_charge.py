@@ -72,48 +72,68 @@ t = 0
 
 step_count = 0
 data_set = 0
-
 scene.range = 1.2e-6
+running = True
 
-while t < 1.5e-9:
+# THE RESET FUNCTION
+def reset_simulation():
+    global t, step_count, data_set, running
+    running = False  # Pause math updates temporarily during frame transitions
+    
+    # Restore initial properties
+    t = 0
+    step_count = 0
+    data_set = 0
+    particle.pos = vec(-10e-7, 0, 0)
+    
+    running = True   # Restart tracking
+
+# Generate UI Button
+button(text="Repeat Simulation", bind=reset_simulation)
+scene.append_to_caption("\n\n")
+
+print("Starting observations")
+
+while True:
   rate(100)
-  particle.pos = particle.pos + particle.v * dt
-  t = t + dt
-  step_count = step_count + 1
+  if running and t < 1.5e-9:
 
-  r1 = obs1.pos - particle.pos
-  c1 = cross(particle.v, hat(r1))
-  obs1.B = (mnofp*(q*(c1/(mag(r1)**2))))	# Magnetic field at observation pt.
-  
-  r2 = obs2.pos - particle.pos
-  c2 = cross(particle.v, hat(r2))
-  obs2.B = (mnofp*(q*(c2/(mag(r2)**2))))
-  
-  r3 = obs3.pos - particle.pos
-  c3 = cross(particle.v, hat(r3))
-  obs3.B = (mnofp*(q*(c3/(mag(r3)**2))))
-  
-  r4 = obs4.pos - particle.pos
-  c4 = cross(particle.v, hat(r4))
-  obs4.B = (mnofp*(q*(c4/(mag(r4)**2))))
-  
-  r5 = obs5.pos - particle.pos
-  c5 = cross(particle.v, hat(r5))
-  obs5.B = (mnofp*(q*(c5/(mag(r5)**2))))
+    particle.pos = particle.pos + particle.v * dt
+    t = t + dt
+    step_count = step_count + 1
 
-  r6 = obs6.pos - particle.pos
-  c6 = cross(particle.v, hat(r6))
-  obs6.B = (mnofp*(q*(c6/(mag(r6)**2))))
+    r1 = obs1.pos - particle.pos
+    c1 = cross(particle.v, hat(r1))
+    obs1.B = (mnofp*(q*(c1/(mag(r1)**2))))	# Magnetic field at observation pt.
+  
+    r2 = obs2.pos - particle.pos
+    c2 = cross(particle.v, hat(r2))
+    obs2.B = (mnofp*(q*(c2/(mag(r2)**2))))
+  
+    r3 = obs3.pos - particle.pos
+    c3 = cross(particle.v, hat(r3))
+    obs3.B = (mnofp*(q*(c3/(mag(r3)**2))))
+  
+    r4 = obs4.pos - particle.pos
+    c4 = cross(particle.v, hat(r4))
+    obs4.B = (mnofp*(q*(c4/(mag(r4)**2))))
+  
+    r5 = obs5.pos - particle.pos
+    c5 = cross(particle.v, hat(r5))
+    obs5.B = (mnofp*(q*(c5/(mag(r5)**2))))
 
-  if step_count % 100 ==0:
-    print("obs1 B=", obs1.B)
-    print("obs2 B=", obs2.B)
-    print("obs3 B=", obs3.B)
-    print("obs4 B=", obs4.B)
-    print("obs5 B=", obs5.B)
-    print("obs6 B=", obs6.B)
-    data_set = data_set + 1
-    print("Collected dataset:", data_set)
+    r6 = obs6.pos - particle.pos
+    c6 = cross(particle.v, hat(r6))
+    obs6.B = (mnofp*(q*(c6/(mag(r6)**2))))
+
+    if step_count % 100 ==0:
+      print("obs1 B=", obs1.B)
+      print("obs2 B=", obs2.B)
+      print("obs3 B=", obs3.B)
+      print("obs4 B=", obs4.B)
+      print("obs5 B=", obs5.B)
+      print("obs6 B=", obs6.B)
+      data_set = data_set + 1
 # Had to change the variables used for r value, and cross products to update the mag field
 # Obs on x-axis had a mag field of 0; This is becuase the cross product of two vectors in the same direction is 0.
 # Largest mag field is when the particle is closest to a obs location
