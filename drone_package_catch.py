@@ -24,8 +24,8 @@ scene.pause()                   # Pauses the simulation so that user can start w
 # Creating setup for graph that will track how far drone is from the package
 graph=gcurve(color=color.purple)
 
-g = vec(0, -9.8, 0)
-b = 1.5
+g = vec(0, -9.8, 0)    # Gravitational Constant
+b = 1.5                # Drag Coefficient 
 
 running = True
 
@@ -48,7 +48,7 @@ def reset_simulation():
     running = True
 
 # Create UI Button bound to the reset handler
-button(text="Repeat Simulation", bind=reset_simulation)
+button(text = "Repeat Simulation", bind = reset_simulation)
 scene.append_to_caption("\n\n")
 
 while True:
@@ -87,6 +87,6 @@ while True:
 # Stop and exit from loop if drone goes too fast
     if mag(pack.pos - drone.pos) < 4:
       print(f"The drone caught the package in {t - deltat: .2f} seconds.")
-      running = False
+      running = False        # As soon as 'running = False' it jumps back to the definition 'reset_simulation'
 
 print("Loop has finished.")
