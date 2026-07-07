@@ -48,8 +48,6 @@ def reset_simulation():
 button(text="Repeat Simulation", bind=reset_simulation)
 scene.append_to_caption("\n\n")
 
-reset_simulation()
-
 while True:
   rate(300)
   if running and pack.pos.y > grass.pos.y:
@@ -84,8 +82,8 @@ while True:
 
     graph.plot(t, magr)   # Graph plots how far drone is from package 'r' over time 't'
 # Stop and exit from loop if drone goes too fast
-  if mag(pack.pos - drone.pos) < 4:
-    print(f"The drone caught the package in {t - deltat: .2f} seconds.")
-    running = False
+    if mag(pack.pos - drone.pos) < 4:
+      print(f"The drone caught the package in {t - deltat: .2f} seconds.")
+      running = False
 
 print("Loop has finished.")
