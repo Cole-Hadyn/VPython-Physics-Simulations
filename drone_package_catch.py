@@ -50,41 +50,42 @@ scene.append_to_caption("\n\n")
 
 reset_simulation()
 
-while pack.pos.y > grass.pos.y:
+while True:
   rate(300)
-  t = t + deltat
+  if running and pack.pos.y > grass.pos.y:
+    t = t + deltat
 
-  Fg_drone = drone.m * g
-  Fg_pack = pack.m *g
+    Fg_drone = drone.m * g
+    Fg_pack = pack.m *g
 # Finding the vector 'r' that points from the drone to the package
-  r = (pack.pos - drone.pos)      # Updates 'r' each run through loop
-  rhat = hat(r)
-  magr = mag(r)
+    r = (pack.pos - drone.pos)      # Updates 'r' each run through loop
+    rhat = hat(r)
+    magr = mag(r)
 # Regulates the drone speed as it approaches the package
-  if magr > 20:
-      magF_thrust = 250
-  else:
-      magF_thrust = 250 * (magr / 20)  # Force approaches 0 as magnitude of 'r' approaches 0
+    if magr > 20:
+        magF_thrust = 250
+    else:
+        magF_thrust = 250 * (magr / 20)  # Force approaches 0 as magnitude of 'r' approaches 0
     
-  F_thrust = magF_thrust * rhat
+    F_thrust = magF_thrust * rhat
 
-  drone_v = drone.p / drone.m
-  F_drag = -b * drone_v
+    drone_v = drone.p / drone.m
+    F_drag = -b * drone_v
 
-  Fnet_pack = Fg_pack
-  Fnet_drone = F_thrust + Fg_drone + F_drag # Steering thrust AND gravity pulling it down
+    Fnet_pack = Fg_pack
+    Fnet_drone = F_thrust + Fg_drone + F_drag # Steering thrust AND gravity pulling it down
   
 #  MOMENTUM & POSITION UPDATES
-  pack.p = pack.p + (Fnet_pack * deltat)
-  pack.pos = pack.pos + (pack.p / pack.m) * deltat
-  
-  drone.p = drone.p + (Fnet_drone * deltat)
-  drone.pos = drone.pos + (drone.p / drone.m) * deltat
+    pack.p = pack.p + (Fnet_pack * deltat)
+    pack.pos = pack.pos + (pack.p / pack.m) * deltat
+    
+    drone.p = drone.p + (Fnet_drone * deltat)
+    drone.pos = drone.pos + (drone.p / drone.m) * deltat
 
-  graph.plot(t, magr)   # Graph plots how far drone is from package 'r' over time 't'
+    graph.plot(t, magr)   # Graph plots how far drone is from package 'r' over time 't'
 # Stop and exit from loop if drone goes too fast
   if mag(pack.pos - drone.pos) < 4:
     print(f"The drone caught the package in {t - deltat: .2f} seconds.")
-    break
+    running = False
 
 print("Loop has finished.")
