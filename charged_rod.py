@@ -30,68 +30,64 @@ sf = 1.2e-4  # Scale factor for the arrows so they fit nicely on screen
 
 
 # Loop to display E-field around the ROD with arrows
-R = 0.25     # Radius of the observation ring around the center of the rod
+# =======================================================================
+# UNIFIED LOOP: Displays both the X-Y and Y-Z E-field rings around the rod
+# =======================================================================
+R = 0.25         # Radius of both observation rings
+x_center = 0.0   # Center position of the Y-Z ring along the rod
 theta = 0
-dtheta = pi/6
+dtheta = pi/6    # 12 symmetric steps around a circle
 
-while theta < 2*pi:
-    # 1. Position the invisible placeholder sphere in a circle
-    obs_pos = vec(R*cos(theta), R*sin(theta), 0)
-    ob = sphere(pos=obs_pos, radius=0.01, visible=False, E=vec(0,0,0))
-
-    # 2. Reset the field accumulator for THIS specific ring position
-    Enet = vec(0,0,0)
-
-    # 3. NESTED LOOP: Integrate over every segment of the rod for this angle
-    x_seg = -L/2 + (dx/2)
-
-    while x_seg < L/2:
-        segmentpos = vec(x_seg, 0, 0)
-        r_vector = ob.pos - segmentpos
-
-        # Calculate dE from this individual segment
-        deltaE = oofpez * (dq / mag(r_vector)**2) * hat(r_vector)
-        Enet = Enet + deltaE
-
-        x_seg = x_seg + dx
-
-    # 4. Assign the total calculated field to the object and draw the arrow
-    ob.E = Enet
-    attach_arrow(ob, "E", scale=sf, color=color.orange)
-    print(f"Angle {degrees(theta):.0f}°: Enet = {Enet}")
-
-    theta = theta + dtheta
-
-theta = 0
-dtheta = pi/6
+print("Generating combined vector rings...")
 
 while theta < 2 * pi:
-    # Projection over y-z planes so it forms a ring circling *around* the rod
-    obs_pos = vec(x_center, R * cos(theta), R * sin(theta))
-    Enet = vec(0,0,0)
+    # ----------------===================================================
+    # RING 1: X-Y Plane Ring (Flat circle extending out from the sides)
+    # ----------------===================================================
+    obs_pos1 = vec(R * cos(theta), R * sin(theta), 0)
+    Enet1 = vec(0,0,0)
 
-    # Calculate total E-field contribution from all N pieces for this angle coordinate
+    # ----------------===================================================
+    # RING 2: Y-Z Plane Ring (Vertical collar wrapping around the cylinder)
+    # ----------------===================================================
+    obs_pos2 = vec(x_center, R * cos(theta), R * sin(theta))
+    Enet2 = vec(0,0,0)
+
+    # ----------------===================================================
+    # INTEGRATION: Calculate segment contributions for BOTH rings at once
+    # ----------------===================================================
     x_seg = -L/2 + (dx/2)
     while x_seg < L/2:
         segmentpos = vec(x_seg, 0, 0)
-        r_vector = obs_pos - segmentpos
+        
+        # Math for Ring 1
+        r_vector1 = obs_pos1 - segmentpos
+        deltaE1 = oofpez * (dq / mag(r_vector1)**2) * hat(r_vector1)
+        Enet1 = Enet1 + deltaE1
 
-        deltaE = oofpez * (dq / mag(r_vector)**2) * hat(r_vector)
-        Enet = Enet + deltaE
+        # Math for Ring 2
+        r_vector2 = obs_pos2 - segmentpos
+        deltaE2 = oofpez * (dq / mag(r_vector2)**2) * hat(r_vector2)
+        Enet2 = Enet2 + deltaE2
 
         x_seg = x_seg + dx
 
-    # Draw the standalone arrow object directly pointing outwards in space
-    arrow(pos=obs_pos, axis=Enet * sf, color=color.orange, shaftwidth=0.012)
+    # ----------------===================================================
+    # RENDER: Draw the distinct field arrows for both geometries
+    # ----------------===================================================
+    # Draw Ring 1 arrow (Cyan so you can tell them apart visually!)
+    arrow(pos=obs_pos1, axis=Enet1 * sf, color=color.cyan, shaftwidth=0.012)
+    
+    # Draw Ring 2 arrow (Orange)
+    arrow(pos=obs_pos2, axis=Enet2 * sf, color=color.orange, shaftwidth=0.012)
+    
+    # Console tracking output
+    print(f"Angle {degrees(theta):.0f}° | Ring 1 Enet={Enet1} | Ring 2 Enet={Enet2}")
 
     theta = theta + dtheta
 
-print("Vector mapping complete.")
+print("Unified vector mapping complete.")
 
-
-
-obs = sphere(pos=vec(0, 0.1, 0), radius=0.02, color=color.orange, visible=False)
-obs.E = vec(0,0,0)
 attach_arrow(obs,"E", scale=1e-3)
 
 
