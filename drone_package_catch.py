@@ -26,6 +26,9 @@ graph=gcurve(color=color.purple)
 
 g = vec(0, -9.8, 0)
 b = 1.5
+
+running = True
+
 # CLEANED RESET FUNCTION: Restores both positions, velocities, trails, and clock state
 def reset_simulation():
     global t, running
