@@ -40,7 +40,7 @@ def reset_simulation():
     obs_1.vel = vec(0, 0, 0.088)
     obs_1.clear_trail()  # Clears the old line from the screen
 
-    obs_2.pos = vec(0.1, -0.015, 0)
+    obs_2.pos = vec(-0.1, -0.015, 0)
     obs_2.vel = vec(0, 0, -0.088)
     obs_2.clear_trail()  
   
