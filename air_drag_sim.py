@@ -50,7 +50,7 @@ ax_plot.grid(True)
 line, = ax_plot.plot([], [], 'r-', lw=2)     # Creates red, solid line of width = 2 starting with empty lists
 point, = ax_plot.plot([], [], 'bo', ms=8)    # Creates blue dot with marker size = 8 starting with empty lists
 
-# Blue represents a function from a package; 'Init' is only run once as the inital function
+# Using a function from a package to define a function; 'Init' is only run once as the inital function
 def init():
     line.set_data([], [])
     point.set_data([], [])
@@ -60,7 +60,7 @@ def init():
 def update(frame):
     line.set_data(x[:frame], y[:frame])		# Update line data from 0 to current frame index
     point.set_data([x[frame]], [y[frame]])	# Position the moving dot at the current frame index
-    return line, point				# Data used to plot
+    return line, point			        	# Data used to plot
 
 # Create animation called 'ani'; Let it be a figure using the data from 'update' to draw the line and point
 # Have the # of frames equal len(x) with the initial function be 'init', and have performance boost = true for the rest of the data from 'update'
