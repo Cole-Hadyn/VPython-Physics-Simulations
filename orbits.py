@@ -18,14 +18,21 @@ print(f"Semi-major axis (a) = {a:.3f}")
 
 
 # Define parameters for Earth's orbit
-orbit_radius = 1  # Distance from the Sun (in arbitrary units)
 orbital_speed = 0.02  # Speed of Earth's orbit (angle per frame)
 earth_radius = 0.04  # Earth's radius
 earth_angle = 0  # Starting angle of the Earth
 
+# Parameter for Moon's orbit
+moon_orbit_radius = 0.15	# Orbit radius of the Moon
+moon_speed = 0.15			# Moon speed
+moon_radius = 0.015		# Radius of the Moon
+moon_angle = 0
+
 # Create Earth object
 earth = sphere(pos=vector(R_p, 0, 0), radius=earth_radius, color=color.green, make_trail=True)
 
+# Create moon object
+moon = sphere(pos=earth.pos + vector(moon_orbit_radius, 0, 0), radius=moon_radius, color=color.gray(0.7), make_trail=False)
 
 # Main animation loop
 while True:
@@ -37,4 +44,11 @@ while True:
     x = r * cos(earth_angle)     # Convert polar coordinates (r, theta) into standard 3D Cartesian coordinates (x, y, z)
     y = r * sin(earth_angle)
     earth.pos = vector(x, y, 0)  # Set the new position of the Earth
+
+    x_moon_offset = moon_orbit_radius * cos(moon_angle)
+    y_moon_offset = moon_orbit_radius * sin(moon_angle)
+    moon.pos = earth.pos + vector(x_moon_offset, y_moon_offset, 0)
+
+
     earth_angle += orbital_speed
+    moon_angle += moon_speed
