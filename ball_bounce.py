@@ -41,6 +41,17 @@ velocity = vector(0,0,0)
 energy_loss = .85
 b = 0.4
 
+def reset_simulation():
+    global t
+    t = 0
+    ball.pos = start_pos
+    print("Simulation reset!")
+
+# Create the clickable button in the browser canvas
+button(text = "Repeat Simulation", bind = reset_simulation)
+scene.append_to_caption("\n\n") # Adds vertical spacing below the button
+
+
 while True:
     rate(100)  # Control the simulation speed
 
