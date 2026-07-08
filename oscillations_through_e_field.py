@@ -5,8 +5,8 @@ os.environ['VPYTHON_LAUNCH_BROWSER'] = 'False'
 from vpython import *
 
 # Function to create a yellow arrow at a given position
-def create_arrow(position, direction=vector(1, 0, 0), length=2, color=color.yellow):
-    my_arrow = arrow(pos=position, axis=direction * length, color=color, shaftwidth=0.05)
+def create_arrow(position, direction = vector(1, 0, 0), length = 2, color = color.orange):
+    my_arrow = arrow(pos = position, axis = direction * length, color = color, shaftwidth=0.05)
     return my_arrow
 
 # A function that draws arrows located on a box whose center is at (0,0)    
@@ -36,7 +36,7 @@ def draw_box_o_arrows(boxsize, pos1, pos2, q1, q2, n):
 
     E_total = E_mag1*E1_pos/mag(E1_pos)+E_mag2*E2_pos/mag(E2_pos)
 
-    my_arrow = create_arrow(position, E_total/mag(E_total), 0.35, color.red)
+    my_arrow = create_arrow(position, E_total/mag(E_total), 0.35, color.orange)
 
 
 
@@ -51,11 +51,11 @@ scene2 = canvas(
 
 # Create a small ball to represent a point charge
 pos1 = vector(-2,0,0) # This is the location of the first charge
-my_charge = sphere(pos = pos1, radius = 0.05, color =color.blue)
+my_charge = sphere(pos = pos1, radius = 0.1, color =color.red)
 
 #Add a second point charge
 pos2 = vector(2,0,0) # This is the location of the 2nd charge
-my_charge2 = sphere(pos = pos2, radius = 0.05, color =color.blue)
+my_charge2 = sphere(pos = pos2, radius = 0.1, color =color.red)
 
 # set constants
 k = 9.0e9 # Coulombs constant in Nm^2/C^2
