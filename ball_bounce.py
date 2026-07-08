@@ -1,3 +1,8 @@
+import os
+os.environ['VPYTHON_LAUNCH_BROWSER'] = 'False'
+
+from vpython import *
+
 '''
   create the screen, this makes it easier to see things
 '''
@@ -30,12 +35,18 @@ ball = sphere(pos = start_pos,radius=R,color=color.red)
 # adding loop to create motion of the ball dropping
 g = 9.81  #gravitational constant for Earth
 t = 0   #start time in seconds
-dt = 0.1    #delta time in seconds
+dt = 0.01    #delta time in seconds
+
 velocity = vector(0,0,0)
-energy_loss = .9
+energy_loss = .85
+b = 0.4
+
 while True:
     rate(100)  # Control the simulation speed
-    velocity.y -= g * dt  # Update velocity with gravity
+
+    drag_acceleration_y = -b * velocity.y
+    total_acceleration_y = -g + drag_acceleration_y
+    velocity.y += total_acceleration_y * dt  # Update velocity with gravity
     ball.pos.y += velocity.y * dt  # Update ball position
     # Check for bounce
     if ball.pos.y <= ball.radius :  # When ball hits the floor
