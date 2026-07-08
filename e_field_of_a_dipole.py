@@ -77,7 +77,7 @@ scene.append_to_caption("\n\n") # Adds vertical spacing below the button
 
 # Navigating the charge around the E-field
 while t < 300:
-  rate(100)
+  rate(120)
   r3 = test_charge.pos - charge_1.pos		# Distance of (+) charge from test charge
   r4 = test_charge.pos - charge_2.pos		# Distance of (-) charge from test charge
   test_charge.E1 = (oofpez * charge_1.q / mag(r3)**2) * hat(r3)	 # Calculating external E-field from each pt. in dipole
