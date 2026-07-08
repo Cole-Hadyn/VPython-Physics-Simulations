@@ -1,21 +1,40 @@
+import os
+os.environ['VPYTHON_LAUNCH_BROWSER'] = 'False'
+
+from vpython import *
+
+
 # Create the Sun at the origin
 sun = sphere(pos=vector(0, 0, 0), radius=0.2, color=color.yellow, emissive=True)
 
+R_a = 1.4	# Longest distance from the Sun
+R_p = 0.7	# Shortest distance from the Sun
+
+e = (R_a - R_p) / (R_a + R_p)	# eccentricity formula
+a = (R_a + R_p) /2 		# Semi-major axis
+
+print(f"Calculated Eccentricity (e) = {e:.3f}")
+print(f"Semi-major axis (a) = {a:.3f}")
+
+
 # Define parameters for Earth's orbit
 orbit_radius = 1  # Distance from the Sun (in arbitrary units)
-orbital_speed = 0.01  # Speed of Earth's orbit (angle per frame)
-earth_radius = 0.05  # Earth's radius
+orbital_speed = 0.02  # Speed of Earth's orbit (angle per frame)
+earth_radius = 0.04  # Earth's radius
 earth_angle = 0  # Starting angle of the Earth
 
 # Create Earth object
-earth = sphere(pos=vector(orbit_radius, 0, 0), radius=earth_radius, color=color.blue, make_trail=True)
+earth = sphere(pos=vector(R_p, 0, 0), radius=earth_radius, color=color.green, make_trail=True)
+
 
 # Main animation loop
 while True:
     rate(100)  # Refresh the scene 100 times per second (adjust for performance)
 
+    r = (a * (1 - e**2)) / (1 + e * cos(earth_angle))
+
     # Update Earth's position based on its angle
-    earth_angle += orbital_speed
-    x = orbit_radius * cos(earth_angle)
-    y = orbit_radius * sin(earth_angle)
+    x = r * cos(earth_angle)     # Convert polar coordinates (r, theta) into standard 3D Cartesian coordinates (x, y, z)
+    y = r * sin(earth_angle)
     earth.pos = vector(x, y, 0)  # Set the new position of the Earth
+    earth_angle += orbital_speed
