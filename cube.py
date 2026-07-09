@@ -12,14 +12,12 @@ dz = 2
 while y < 11:	# Initail loop to set bounds for 'y'; loops until all rows are complete
   x = -9	# Establishing the starting conditions for the nested loop
 
-  while x < 11:		# loop creates a row of boxes
-    rate(10)
-    z = 0
-    box(pos = vec(x,y,z), color = color.green)
-    x = x + dx
+  while x < 11:		# Sets the bounds for 'x'
+    z = 0	# Starting condition for 'z' in next nestes loop
 
-    while z < 21:
+    while z < 21:	# Loop sets that creates the cube
+      rate(2)
       box(pos = vec(x,y,z), color = color.green)
       z = z + dz
-
+    x = x + dx
   y = y + dy	# Updates 'y' position for the next row
